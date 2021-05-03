@@ -1,3 +1,17 @@
-let str = 'hello'
+import express from 'express';
+import sharp from 'sharp'
 
-export default str;
+import routes from './routes/routes';
+import {resize} from './utils/img_process'
+
+const app = express();
+const port = 3000;
+
+app.use(routes);
+
+
+resize('1.jpg');
+
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
+});
