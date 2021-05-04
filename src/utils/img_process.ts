@@ -1,14 +1,10 @@
 import sharp from 'sharp';
-import {promises as fsPromises} from 'fs';
 
-//const inputFile = '../assets/img_full/1.jpg' 
-
-
-export const resize = async (img_name: string): Promise<void> => {
+export const resize = async (file_name: string, width: number, height: number): Promise<void> => {
     try {
-        await sharp('./assets/fjord.jpg')
-        .resize(200, 200)
-        .toFile('./assets/fjord2.jpg')
+        await sharp(`./assets/img_full/${file_name}.jpg`)
+        .resize(width, height)
+        .toFile(`./assets/img_formatted/${file_name}_f.jpg`)
     } catch(e) {
         console.log(`Error occured: ${e}`);
     }
