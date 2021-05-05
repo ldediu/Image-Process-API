@@ -5,12 +5,12 @@ import { resize } from '../utils/img_process';
 
 const routes = express.Router();
 
-routes.get('/', (req, res) => {
+routes.get('/', (req:express.Request, res:express.Response) => {
   res.status(200);
   res.send('Main page');
 });
 
-routes.get('/api', async (req, res) => {
+routes.get('/api', async (req:express.Request, res:express.Response) => {
   const req_arr = Object.values(req.query);
   if (req_arr.length < 3) {
     res.status(400);
