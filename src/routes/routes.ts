@@ -1,6 +1,7 @@
 import express from 'express';
-import { resize } from '../utils/img_process';
 import path from 'path';
+import fs from 'fs';
+import { resize } from '../utils/img_process';
 
 const routes = express.Router();
 
@@ -27,12 +28,17 @@ routes.get('/api', async (req, res) => {
         'img_thumb',
         `${file_name}_thumb.jpg`
       );
-      if (await resize(file_name, width, height)) {
+      if (fs.existsSync(output_file)) {
         res.status(200);
         res.sendFile(output_file);
       } else {
-        res.status(400);
-        res.send(`No such image or wrong input data`);
+        if (await resize(file_name, width, height)) {
+          res.status(200);
+          res.sendFile(output_file);
+        } else {
+          res.status(400);
+          res.send(`No such image or wrong input data`);
+        }
       }
     } catch (e) {
       console.log(`Error: ${e}`);
